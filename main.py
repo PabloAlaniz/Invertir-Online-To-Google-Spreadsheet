@@ -15,8 +15,10 @@ def main(event=None, context=None):
 
             googlesheet = GoogleSheetConector(doc_name=DOC_NAME, json_google_file=JSON_GOOGLE_FILE)
             today = datetime.datetime.now().strftime("%d/%m/%Y")
-            googlesheet.spreadsheet_append([[today, total_cuenta]])
-            logging.info(f"Dato agregado con éxito: {today}, {total_cuenta}")
+            mep = api.get_valor_dolar_mep()
+            monto_usd = total_cuenta / mep
+            googlesheet.spreadsheet_append([[today, total_cuenta, mep, monto_usd]])
+            logging.info(f"Dato agregado con éxito: {today}, {total_cuenta}, {mep}")
         else:
             logging.error("La respuesta de la API no contiene 'totalEnPesos'")
             logging.debug(f"Respuesta de la API: {cuenta}")

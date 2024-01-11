@@ -134,3 +134,24 @@ class InvertirOnlineAPI:
         headers = {'Authorization': f'Bearer {self.access_token}'}
         response = requests.get(f"{self.base_url}/api/v2/portafolio/{pais}", headers=headers)
         return self._process_response(response)
+
+    def get_valor_dolar_mep(self, simbolo="AL30"):
+        """
+        Obtiene el valor del dólar MEP para un símbolo específico.
+
+        Realiza una solicitud GET a la API para obtener la cotización del dólar MEP
+        basada en el símbolo proporcionado. Si no se especifica un símbolo, se utiliza
+        'AL30' por defecto.
+
+        Args:
+            simbolo (str): El símbolo para el cual obtener la cotización del dólar MEP.
+                           Por defecto es 'AL30'.
+
+        Returns:
+            double: El valor del dólar MEP para el símbolo dado.
+        """
+        if self.is_token_expired():
+            self.refresh_access_token()
+        headers = {'Authorization': f'Bearer {self.access_token}'}
+        response = requests.get(f"{self.base_url}/api/v2/Cotizaciones/MEP/{simbolo}", headers=headers)
+        return self._process_response(response)
