@@ -19,6 +19,7 @@ def main(event=None, context=None):
             logging.info(f"Dato agregado con éxito: {today}, {total_cuenta}")
         else:
             logging.error("La respuesta de la API no contiene 'totalEnPesos'")
+            logging.debug(f"Respuesta de la API: {cuenta}")
     except Exception as e:
         logging.error(f"Error: {e}")
 
